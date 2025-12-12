@@ -1,4 +1,3 @@
-// import
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -10,13 +9,17 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,             // ✅ enforce unique emails
-    lowercase: true,          // ✅ store all emails lowercase
-    trim: true
+    lowercase: true,   // keep lowercase
+    trim: true,
+    unique: true
   },
   password: {
     type: String,
     required: true
+  },
+   phone: {
+    type: String,
+    default: ""
   },
   college: {
     type: String,
@@ -27,23 +30,14 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user"
   },
-  github: {
-    type: String,
-    default: ""
-  },
-  linkedin: {
-    type: String,
-    default: ""
-  },
-  profile: {
-    type: String,
-    default: ""
-  }
-}, { timestamps: true }); // ✅ adds createdAt & updatedAt fields
+  github: { type: String, default: "" },
+  linkedin: { type: String, default: "" },
+  profile: { type: String, default: "" },
+  avatarDataUrl: { type: String, default: "" },
+  skill: { type: String, default: "" },
+  track: { type: String, default: "" },
+}, { timestamps: true });
 
-// ✅ Ensure case-insensitive unique email
-userSchema.index({ email: 1 }, { unique: true, collation: { locale: "en", strength: 2 } });
 
-const users = mongoose.model("users", userSchema);
 
-module.exports = users;
+module.exports = mongoose.model("users", userSchema);
